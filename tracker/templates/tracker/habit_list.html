@@ -1,0 +1,28 @@
+{% load get_item %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Meus Hábitos</title>
+  </head>
+  <body>
+    <h1>Meus Hábitos - {{ today }}</h1>
+    <ul>
+      {% for habit in habits %}
+      <li>
+        {{ habit.name }} - {% if logs|get_item:habit.id %}
+        <strong>Feito</strong>
+        {% else %}
+        <strong>Não feito</strong>
+        {% endif %} -
+        <a href="{% url 'tracker:toggle_habit_log' habit.id %}"
+          >Marcar/Desmarcar</a
+        >
+      </li>
+      {% empty %}
+      <li>Nenhum hábito cadastrado.</li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>
